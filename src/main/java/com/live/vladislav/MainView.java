@@ -12,7 +12,9 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.PWA;
 import org.springframework.beans.factory.annotation.Autowired;
+import sun.jvm.hotspot.ui.classbrowser.ClassBrowserPanel;
 
+import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -35,6 +37,9 @@ import java.awt.*;
 @CssImport("./styles/shared-styles.css")
 @CssImport(value = "./styles/vaadin-text-field-styles.css", themeFor = "vaadin-text-field")
 public class MainView extends VerticalLayout {
+
+    private final Label label;
+    private final Label label1;
 
     /**
      * Construct a new Vaadin view.
@@ -63,9 +68,18 @@ public class MainView extends VerticalLayout {
         // Use custom CSS classes to apply styling. This is defined in shared-styles.css.
         addClassName("centered-content");
 
-        Label label = new Label("Hellow world");
+        label = new Label("Hellow world");
+        label1 = new Label("1");
 
-        add(textField, button, label);
+        Button increaseButtone = new Button("Increase");
+        increaseButtone.addClickListener(buttonClickEvent->IncreaseValues());
+
+        add(textField, button, label,label1, increaseButtone);
+    }
+
+    private void IncreaseValues() {
+        int currentValue = Integer.parseInt(label1.getText()) + 1;
+        label1.setText(Integer.toString(currentValue));
     }
 
 }
