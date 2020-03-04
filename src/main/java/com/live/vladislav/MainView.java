@@ -14,6 +14,7 @@ import com.vaadin.flow.server.PWA;
 import org.springframework.beans.factory.annotation.Autowired;
 import sun.jvm.hotspot.ui.classbrowser.ClassBrowserPanel;
 
+import javax.management.NotificationFilter;
 import javax.swing.*;
 import java.awt.*;
 
@@ -74,6 +75,9 @@ public class MainView extends VerticalLayout {
         Button increaseButtone = new Button("Increase");
         increaseButtone.addClickListener(buttonClickEvent->IncreaseValues());
 
+        Button displayMessageButton = new Button("Show Message", buttonClickEvent -> Notification.show("Hello!"));
+
+        add(displayMessageButton);
         add(textField, button, label,label1, increaseButtone);
     }
 
