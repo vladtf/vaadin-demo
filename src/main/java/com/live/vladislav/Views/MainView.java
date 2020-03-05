@@ -1,10 +1,14 @@
-package com.live.vladislav;
+package com.live.vladislav.Views;
 
+import com.live.vladislav.Application;
+import com.live.vladislav.DataProvider.MockDataService;
+import com.live.vladislav.Models.UserModel;
+import com.live.vladislav.Services.GreetService;
 import com.vaadin.flow.component.Key;
-import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.dependency.CssImport;
+import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -12,10 +16,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.PWA;
 import org.springframework.beans.factory.annotation.Autowired;
-import sun.jvm.hotspot.ui.classbrowser.ClassBrowserPanel;
 
-import javax.management.NotificationFilter;
-import javax.swing.*;
 import java.awt.*;
 
 /**
@@ -69,7 +70,7 @@ public class MainView extends VerticalLayout {
         // Use custom CSS classes to apply styling. This is defined in shared-styles.css.
         addClassName("centered-content");
 
-        label = new Label("Hellow world");
+        label = new Label("Hello world");
         label1 = new Label("1");
 
         Button increaseButtone = new Button("Increase");
@@ -79,11 +80,25 @@ public class MainView extends VerticalLayout {
 
         add(displayMessageButton);
         add(textField, button, label,label1, increaseButtone);
+
+        //SandBoxView view = new SandBoxView();
+
+        Grid<UserModel> grid = new Grid<>();
+
+        grid.addColumn(UserModel::getFirstName);
+        grid.addColumn(UserModel::getLastName);
+        grid.addColumn(UserModel::getEmail);
+
+        grid.setItems(MockDataService.GetAllPeople());
+
+        add(grid);
+
     }
 
     private void IncreaseValues() {
         int currentValue = Integer.parseInt(label1.getText()) + 1;
         label1.setText(Integer.toString(currentValue));
+
     }
 
 }

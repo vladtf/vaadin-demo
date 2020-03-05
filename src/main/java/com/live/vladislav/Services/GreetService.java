@@ -1,4 +1,4 @@
-package com.live.vladislav;
+package com.live.vladislav.Services;
 
 import java.io.Serializable;
 
