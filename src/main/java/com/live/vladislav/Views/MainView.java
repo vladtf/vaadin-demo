@@ -4,13 +4,16 @@ import com.live.vladislav.Application;
 import com.live.vladislav.DataProvider.MockDataService;
 import com.live.vladislav.Models.UserModel;
 import com.live.vladislav.Services.GreetService;
+import com.vaadin.flow.component.ClickEvent;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.contextmenu.MenuItem;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.menubar.MenuBar;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -18,8 +21,6 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.server.PWA;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.awt.*;
 
 /**
  * A sample Vaadin view class.
@@ -35,25 +36,13 @@ import java.awt.*;
  */
 @Route
 @RouteAlias(value = "root")
-@PWA(name = "Vaadin Application",
-        shortName = "Vaadin App",
-        description = "This is an example Vaadin application.",
-        enableInstallPrompt = true)
-@CssImport("./styles/shared-styles.css")
-@CssImport(value = "./styles/vaadin-text-field-styles.css", themeFor = "vaadin-text-field")
 public class MainView extends VerticalLayout {
 
     private final Label label;
     private final Label label1;
-
-    /**
-     * Construct a new Vaadin view.
-     * <p>
-     * Build the initial UI state for the user accessing the application.
-     *
-     * @param service The message service. Automatically injected Spring managed bean.
-     */
     public MainView(@Autowired GreetService service) {
+
+        setUpMenuBar();
 
         // Use TextField for standard text input
         TextField textField = new TextField("Your name");
@@ -98,6 +87,15 @@ public class MainView extends VerticalLayout {
 
         add(new Button("Go to Sandbox", buttonClickEvent -> UI.getCurrent().navigate("sandbox")));
 
+
+    }
+
+    private void setUpMenuBar() {
+        MenuBar menuBar = new MenuBar();
+        menuBar.addItem("Main", menuItemClickEvent -> UI.getCurrent().navigate("root") );
+        menuBar.addItem("Sandbox", menuItemClickEvent -> UI.getCurrent().navigate("sandbox") );
+        menuBar.addItem("ToDo", menuItemClickEvent -> UI.getCurrent().navigate("todo") );
+        add(menuBar);
     }
 
     private void IncreaseValues() {

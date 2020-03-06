@@ -11,9 +11,6 @@ import com.vaadin.flow.router.Route;
 @Route(value = "sandbox")
 public class SandBoxView extends VerticalLayout {
     public SandBoxView() {
-        // Content goes here.
-        //getElement().appendChild(...);
-
         add(new Button("Go back", buttonClickEvent -> UI.getCurrent().navigate("root")));
     }
 }
