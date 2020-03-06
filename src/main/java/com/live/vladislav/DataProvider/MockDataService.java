@@ -15,6 +15,7 @@ public class MockDataService {
         users.add(new UserModel("Radu", "Georgescu", "rad.georg@email.com"));
         users.add(new UserModel("George", "Alexandru", "geoalex@email.com"));
 
+
         return users;
     }
 }
