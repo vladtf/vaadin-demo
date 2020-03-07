@@ -1,6 +1,6 @@
-package com.live.vladislav.Services;
+package com.live.vladislav.ui.services;
 
-import com.live.vladislav.Models.Todo;
+import com.live.vladislav.ui.models.Todo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.transaction.Transactional;

@@ -1,6 +1,6 @@
-package com.live.vladislav.Services;
+package com.live.vladislav.ui.services;
 
-import com.live.vladislav.Models.Todo;
+import com.live.vladislav.ui.models.Todo;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import com.vaadin.flow.spring.annotation.UIScope;

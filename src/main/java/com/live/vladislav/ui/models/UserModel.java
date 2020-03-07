@@ -1,4 +1,4 @@
-package com.live.vladislav.Models;
+package com.live.vladislav.ui.models;
 
 public class UserModel {
     private String FirstName;

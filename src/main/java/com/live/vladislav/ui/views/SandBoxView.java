@@ -1,4 +1,4 @@
-package com.live.vladislav.Views;
+package com.live.vladislav.ui.views;
 
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;

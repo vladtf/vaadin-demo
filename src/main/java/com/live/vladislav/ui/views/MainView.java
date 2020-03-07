@@ -1,13 +1,15 @@
-package com.live.vladislav.Views;
+package com.live.vladislav.ui.views;
 
-import com.live.vladislav.DataProvider.MockDataService;
-import com.live.vladislav.Models.UserModel;
-import com.live.vladislav.Services.GreetService;
+import com.live.vladislav.ui.dataProviders.MockDataService;
+import com.live.vladislav.ui.models.UserModel;
+import com.live.vladislav.ui.services.GreetService;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.menubar.MenuBar;
 import com.vaadin.flow.component.notification.Notification;
@@ -30,18 +32,25 @@ import org.springframework.beans.factory.annotation.Autowired;
  * A new instance of this class is created for every new user and every
  * browser tab/window.
  */
-@Route
+@Route("")
 @RouteAlias(value = "root")
 @UIScope
 public class MainView extends VerticalLayout {
 
-    private final Label label;
-    private final Label label1;
-
     public MainView(@Autowired GreetService service) {
 
-        setUpMenuBar();
+        add(new H1("Main View"), new H2("Hello"));
 
+        setUpMenuBar();
+        defaultSetup(service);
+
+        setupGrid();
+
+        add(new Button("Go to Sandbox", buttonClickEvent -> UI.getCurrent().navigate("sandbox")));
+
+    }
+
+    private void defaultSetup(@Autowired GreetService service) {
         // Use TextField for standard text input
         TextField textField = new TextField("Your name");
 
@@ -60,44 +69,36 @@ public class MainView extends VerticalLayout {
         // Use custom CSS classes to apply styling. This is defined in shared-styles.css.
         addClassName("centered-content");
 
-        label = new Label("Hello world");
-        label1 = new Label("1");
-
+        Label label = new Label("1");
         Button increaseButtone = new Button("Increase");
-        increaseButtone.addClickListener(buttonClickEvent->IncreaseValues());
+        increaseButtone.addClickListener(buttonClickEvent -> IncreaseValues(label));
 
         Button displayMessageButton = new Button("Show Message", buttonClickEvent -> Notification.show("Hello!"));
 
         add(displayMessageButton);
-        add(textField, button, label,label1, increaseButtone);
+        add(textField, button, label, increaseButtone);
+    }
 
-        //SandBoxView view = new SandBoxView();
-
+    private void setupGrid() {
         Grid<UserModel> grid = new Grid<>();
-
         grid.addColumn(UserModel::getFirstName);
         grid.addColumn(UserModel::getLastName);
         grid.addColumn(UserModel::getEmail);
-
         grid.setItems(MockDataService.GetAllPeople());
-
         add(grid);
-
-        add(new Button("Go to Sandbox", buttonClickEvent -> UI.getCurrent().navigate("sandbox")));
-
     }
 
     private void setUpMenuBar() {
         MenuBar menuBar = new MenuBar();
-        menuBar.addItem("Main", menuItemClickEvent -> UI.getCurrent().navigate("root") );
-        menuBar.addItem("Sandbox", menuItemClickEvent -> UI.getCurrent().navigate("sandbox") );
-        menuBar.addItem("ToDo", menuItemClickEvent -> UI.getCurrent().navigate("todo") );
+        menuBar.addItem("Main", menuItemClickEvent -> UI.getCurrent().navigate("root"));
+        menuBar.addItem("Sandbox", menuItemClickEvent -> UI.getCurrent().navigate("sandbox"));
+        menuBar.addItem("ToDo", menuItemClickEvent -> UI.getCurrent().navigate("todo"));
         add(menuBar);
     }
 
-    private void IncreaseValues() {
-        int currentValue = Integer.parseInt(label1.getText()) + 1;
-        label1.setText(Integer.toString(currentValue));
+    private void IncreaseValues(Label label) {
+        int currentValue = Integer.parseInt(label.getText()) + 1;
+        label.setText(Integer.toString(currentValue));
 
     }
 

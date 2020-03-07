@@ -1,6 +1,6 @@
-package com.live.vladislav.Services;
+package com.live.vladislav.ui.services;
 
-import com.live.vladislav.Models.Todo;
+import com.live.vladislav.ui.models.Todo;
 import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;

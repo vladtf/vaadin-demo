@@ -1,6 +1,6 @@
-package com.live.vladislav.Services;
+package com.live.vladislav.ui.services;
 
-import com.live.vladislav.Models.Todo;
+import com.live.vladislav.ui.models.Todo;
 
 /**
  * Created by mhellber on 9/1/16.

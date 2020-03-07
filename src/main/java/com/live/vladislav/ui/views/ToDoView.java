@@ -1,7 +1,7 @@
-package com.live.vladislav.Views;
+package com.live.vladislav.ui.views;
 
-import com.live.vladislav.Models.Todo;
-import com.live.vladislav.Services.TodoLayout;
+import com.live.vladislav.ui.models.Todo;
+import com.live.vladislav.ui.services.TodoLayout;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;

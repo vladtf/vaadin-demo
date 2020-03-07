@@ -1,4 +1,4 @@
-package com.live.vladislav.Models;
+package com.live.vladislav.ui.models;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
