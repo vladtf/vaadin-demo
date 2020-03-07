@@ -1,15 +1,26 @@
 package com.live.vladislav.Services;
 
-import com.vaadin.flow.component.button.Button;
+import com.live.vladislav.Models.Todo;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.spring.annotation.SpringComponent;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.annotation.PostConstruct;
+import java.util.List;
 
 @SpringComponent
 public class TodoLayout extends VerticalLayout {
-    private TodoLayout()
-    {
-        add(new Button("Auto wired"));
+    @Autowired
+    TodoRepository repository;
+
+    @PostConstruct
+    void init(){
+        setToDos(repository.findAll());
+    }
+
+    private void setToDos(List<Todo> toDos) {
+        removeAll();
+
+        toDos.forEach(toDo -> add(new ToDoItemLayout(toDo)));
     }
 }
