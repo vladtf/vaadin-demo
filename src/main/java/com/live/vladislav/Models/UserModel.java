@@ -12,7 +12,7 @@ public class UserModel {
         setEmail(email);
     }
 
-    public UserModel(){};
+    public UserModel(){}
 
     public String getFirstName() {
         return FirstName;

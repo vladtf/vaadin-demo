@@ -15,6 +15,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
+import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -31,6 +32,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 @Route
 @RouteAlias(value = "root")
+@UIScope
 public class MainView extends VerticalLayout {
 
     private final Label label;
