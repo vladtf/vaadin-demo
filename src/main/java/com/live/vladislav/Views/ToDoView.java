@@ -7,6 +7,7 @@ import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -63,11 +64,16 @@ public class ToDoView extends VerticalLayout {
 
         formLayout.addAndExpand(task);
         formLayout.add(add);
-        
+
         add.addClickListener(buttonClickEvent -> {
-           todoLayout.add(new Todo(task.getValue()));
-           task.setValue("");
-           task.focus();
+            if (!task.getValue().isEmpty()) {
+                todoLayout.add(new Todo(task.getValue()));
+                task.setValue("");
+                task.focus();
+            }
+            else{
+                Notification.show("Text field is empty");
+            }
         });
         add.addClickShortcut(Key.ENTER);
         root.add(formLayout);
@@ -80,7 +86,7 @@ public class ToDoView extends VerticalLayout {
 
 
     private void addDeleteButton() {
-        root.add(new Button("Delete completed", click-> todoLayout.deleteCompleted()));
+        root.add(new Button("Delete completed", click -> todoLayout.deleteCompleted()));
     }
 
 }
