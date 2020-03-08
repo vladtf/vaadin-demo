@@ -20,6 +20,8 @@ import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.annotation.PostConstruct;
+
 /**
  * A sample Vaadin view class.
  * <p>
@@ -47,7 +49,11 @@ public class MainView extends VerticalLayout {
         setupGrid();
 
         add(new Button("Go to Sandbox", buttonClickEvent -> UI.getCurrent().navigate("sandbox")));
+    }
 
+    @PostConstruct
+    private  void goToSandBox(){
+        UI.getCurrent().navigate("sandbox");
     }
 
     private void defaultSetup(@Autowired GreetService service) {
