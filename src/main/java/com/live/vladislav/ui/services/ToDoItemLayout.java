@@ -15,6 +15,8 @@ public class ToDoItemLayout extends HorizontalLayout {
         done = new Checkbox();
         text = new TextField();
 
+        setDefaultVerticalComponentAlignment(Alignment.CENTER);
+
         Binder<Todo> binder = new Binder<>(Todo.class);
         binder.bindInstanceFields(this);
         binder.setBean(toDo);

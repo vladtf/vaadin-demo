@@ -5,6 +5,7 @@ import com.live.vladislav.ui.services.TodoLayout;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
@@ -54,13 +55,13 @@ public class ToDoView extends VerticalLayout {
 
     private void addForm() {
         HorizontalLayout formLayout = new HorizontalLayout();
-        formLayout.setWidth("80%");
 
         TextField task = new TextField();
         task.focus();
 
         Button add = new Button("");
         add.setIcon(VaadinIcon.PLUS.create());
+        add.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
         formLayout.addAndExpand(task);
         formLayout.add(add);
@@ -76,6 +77,7 @@ public class ToDoView extends VerticalLayout {
             }
         });
         add.addClickShortcut(Key.ENTER);
+        formLayout.setWidth("80%");
         root.add(formLayout);
     }
 
