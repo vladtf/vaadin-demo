@@ -69,4 +69,6 @@ public class ContactFormTest {
         Assert.assertEquals(company1, savedContact.getCompany());
         Assert.assertEquals(Contact.Status.Customer, savedContact.getStatus());
     }
+
+
 }

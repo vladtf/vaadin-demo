@@ -15,19 +15,22 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.spring.annotation.UIScope;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
+
+@Component
+@Scope("prototype")
 @Route(value = "listview", layout = MainLayout.class)
 @PageTitle("Contacts | Vaadin CRN")
-@UIScope
 @CssImport("./styles/shared-styles.css")
 public class ListView extends VerticalLayout {
 
-    private final Div content;
-    private final ContactForm form;
-    private Grid<Contact> grid = new Grid<>(Contact.class);
-    private TextField filterText = new TextField();
-    private ContactService contactService;
+    final Div content;
+    public final ContactForm form;
+    public Grid<Contact> grid = new Grid<>(Contact.class);
+    TextField filterText = new TextField();
+    ContactService contactService;
 
     public ListView(ContactService contactService,
                     CompanyService companyService) {

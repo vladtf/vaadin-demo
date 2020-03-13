@@ -30,7 +30,7 @@ public class ContactForm extends FormLayout {
     Button delete = new Button("Delete");
     Button close = new Button("Close");
 
-    Binder<Contact> binder = new BeanValidationBinder<>(Contact.class);
+    public Binder<Contact> binder = new BeanValidationBinder<>(Contact.class);
 
     public ContactForm(List<Company> companies) {
         addClassName("contact-form");
