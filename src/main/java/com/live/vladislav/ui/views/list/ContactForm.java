@@ -1,4 +1,4 @@
-package com.live.vladislav.ui.views;
+package com.live.vladislav.ui.views.list;
 
 import com.live.vladislav.backend.entity.Company;
 import com.live.vladislav.backend.entity.Contact;

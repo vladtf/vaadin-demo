@@ -1,9 +1,10 @@
-package com.live.vladislav.ui.views;
+package com.live.vladislav.ui.views.list;
 
 import com.live.vladislav.backend.entity.Company;
 import com.live.vladislav.backend.entity.Contact;
 import com.live.vladislav.backend.service.CompanyService;
 import com.live.vladislav.backend.service.ContactService;
+import com.live.vladislav.ui.views.MainLayout;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -13,13 +14,15 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.annotation.UIScope;
 
-@Route(value = "sandbox")
+@Route(value = "sandbox", layout = MainLayout.class)
+@PageTitle("Contacts | Vaadin CRN")
 @UIScope
 @CssImport("./styles/shared-styles.css")
-public class SandBoxView extends VerticalLayout {
+public class ListView extends VerticalLayout {
 
     private final Div content;
     private final ContactForm form;
@@ -27,8 +30,8 @@ public class SandBoxView extends VerticalLayout {
     private TextField filterText = new TextField();
     private ContactService contactService;
 
-    public SandBoxView(ContactService contactService,
-                       CompanyService companyService) {
+    public ListView(ContactService contactService,
+                    CompanyService companyService) {
         this.contactService = contactService;
         add(new Button("Go back", buttonClickEvent -> UI.getCurrent().navigate("root")));
 
