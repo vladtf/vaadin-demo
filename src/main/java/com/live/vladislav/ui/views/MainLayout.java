@@ -39,8 +39,11 @@ public class MainLayout extends AppLayout {
         listLink.setHighlightCondition(HighlightConditions.sameLocation());
 
         addToDrawer(new VerticalLayout(
-                new VerticalLayout(listLink),
-                new RouterLink("Dashboard", DashboardView.class)
-        ));
+                        listLink,
+                        new RouterLink("Dashboard", DashboardView.class),
+                        new RouterLink("Main", MainView.class),
+                        new RouterLink("ToDo", ToDoView.class)
+                )
+        );
     }
 }

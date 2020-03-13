@@ -15,12 +15,10 @@ import com.vaadin.flow.component.menubar.MenuBar;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.RouteAlias;
 import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import javax.annotation.PostConstruct;
 
 /**
  * A sample Vaadin view class.
@@ -34,8 +32,8 @@ import javax.annotation.PostConstruct;
  * A new instance of this class is created for every new user and every
  * browser tab/window.
  */
-@Route("")
-@RouteAlias(value = "root")
+@Route(value = "", layout = MainLayout.class)
+@PageTitle("Main | CRN")
 @UIScope
 public class MainView extends VerticalLayout {
 
@@ -47,13 +45,6 @@ public class MainView extends VerticalLayout {
         defaultSetup(service);
 
         setupGrid();
-
-        add(new Button("Go to Sandbox", buttonClickEvent -> UI.getCurrent().navigate("sandbox")));
-    }
-
-    @PostConstruct
-    private  void goToSandBox(){
-        UI.getCurrent().navigate("sandbox");
     }
 
     private void defaultSetup(@Autowired GreetService service) {
@@ -105,7 +96,6 @@ public class MainView extends VerticalLayout {
     private void IncreaseValues(Label label) {
         int currentValue = Integer.parseInt(label.getText()) + 1;
         label.setText(Integer.toString(currentValue));
-
     }
 
 }

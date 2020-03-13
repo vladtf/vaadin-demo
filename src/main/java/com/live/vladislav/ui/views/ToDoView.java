@@ -13,6 +13,7 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.annotation.UIScope;
 import com.vaadin.flow.theme.Theme;
@@ -21,20 +22,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 
+@PageTitle("ToDo")
 @Route(value = "todo")
 @Theme(value = Lumo.class)
 @UIScope
 public class ToDoView extends VerticalLayout {
 
-    private VerticalLayout root;
-
     @Autowired
     public TodoLayout todoLayout;
+    private VerticalLayout root;
 
     @PostConstruct
     private void init() {
-        add(new Button("Go Back", buttonClickEvent -> UI.getCurrent().navigate("root")));
-
+        add(new Button("Back", buttonClickEvent ->
+                UI.getCurrent().navigate(MainView.class)));
         setupLayout();
         addHeader();
         addForm();
@@ -71,8 +72,7 @@ public class ToDoView extends VerticalLayout {
                 todoLayout.add(new Todo(task.getValue()));
                 task.setValue("");
                 task.focus();
-            }
-            else{
+            } else {
                 Notification.show("Text field is empty");
             }
         });
