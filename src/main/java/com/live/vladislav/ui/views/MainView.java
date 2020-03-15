@@ -4,14 +4,12 @@ import com.live.vladislav.ui.dataProviders.MockDataService;
 import com.live.vladislav.ui.models.UserModel;
 import com.live.vladislav.ui.services.GreetService;
 import com.vaadin.flow.component.Key;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Label;
-import com.vaadin.flow.component.menubar.MenuBar;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -41,7 +39,8 @@ public class MainView extends VerticalLayout {
 
         add(new H1("Main View"), new H2("Hello"));
 
-        setUpMenuBar();
+        //setUpMenuBar();
+
         defaultSetup(service);
 
         setupGrid();
@@ -67,13 +66,13 @@ public class MainView extends VerticalLayout {
         addClassName("centered-content");
 
         Label label = new Label("1");
-        Button increaseButtone = new Button("Increase");
-        increaseButtone.addClickListener(buttonClickEvent -> IncreaseValues(label));
+        Button increaseButton = new Button("Increase");
+        increaseButton.addClickListener(buttonClickEvent -> IncreaseValues(label));
 
         Button displayMessageButton = new Button("Show Message", buttonClickEvent -> Notification.show("Hello!"));
 
         add(displayMessageButton);
-        add(textField, button, label, increaseButtone);
+        add(textField, button, label, increaseButton);
     }
 
     private void setupGrid() {
@@ -85,13 +84,13 @@ public class MainView extends VerticalLayout {
         add(grid);
     }
 
-    private void setUpMenuBar() {
-        MenuBar menuBar = new MenuBar();
-        menuBar.addItem("Main", menuItemClickEvent -> UI.getCurrent().navigate("root"));
-        menuBar.addItem("Sandbox", menuItemClickEvent -> UI.getCurrent().navigate("sandbox"));
-        menuBar.addItem("ToDo", menuItemClickEvent -> UI.getCurrent().navigate("todo"));
-        add(menuBar);
-    }
+//    private void setUpMenuBar() {
+////        MenuBar menuBar = new MenuBar();
+////        menuBar.addItem("Main", menuItemClickEvent -> UI.getCurrent().navigate("root"));
+////        menuBar.addItem("Sandbox", menuItemClickEvent -> UI.getCurrent().navigate("sandbox"));
+////        menuBar.addItem("ToDo", menuItemClickEvent -> UI.getCurrent().navigate("todo"));
+////        add(menuBar);
+//    }
 
     private void IncreaseValues(Label label) {
         int currentValue = Integer.parseInt(label.getText()) + 1;

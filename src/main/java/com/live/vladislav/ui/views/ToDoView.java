@@ -16,15 +16,12 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.annotation.UIScope;
-import com.vaadin.flow.theme.Theme;
-import com.vaadin.flow.theme.lumo.Lumo;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 
 @PageTitle("ToDo")
-@Route(value = "todo")
-@Theme(value = Lumo.class)
+@Route(value = "todo", layout = MainLayout.class)
 @UIScope
 public class ToDoView extends VerticalLayout {
 
