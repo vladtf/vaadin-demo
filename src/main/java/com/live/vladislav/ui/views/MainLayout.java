@@ -71,15 +71,18 @@ public class MainLayout extends AppLayout {
     }
 
     private void createDrawer() {
+        RouterLink mainLink = new RouterLink("Main", MainView.class);
+        mainLink.setHighlightCondition(HighlightConditions.sameLocation());
         RouterLink listLink = new RouterLink("List", ListView.class);
-        listLink.setHighlightCondition(HighlightConditions.sameLocation());
-
+        //listLink.setHighlightCondition(HighlightConditions.sameLocation());
         addToDrawer(new VerticalLayout(
-                        new RouterLink("Main", MainView.class),
+                        mainLink,
                         listLink,
                         new RouterLink("Dashboard", DashboardView.class),
-                        new RouterLink("ToDo", ToDoView.class)
+                        new RouterLink("ToDo", ToDoView.class),
+                        new RouterLink("MineSweeper",MineSweeperView.class)
                 )
         );
+
     }
 }
