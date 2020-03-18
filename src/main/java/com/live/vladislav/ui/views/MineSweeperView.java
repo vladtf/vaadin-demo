@@ -1,8 +1,11 @@
 package com.live.vladislav.ui.views;
 
 import com.live.vladislav.ui.views.minesweeper.Tile;
+import com.vaadin.componentfactory.ToggleButton;
+import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -26,32 +29,47 @@ public class MineSweeperView extends VerticalLayout {
     private final String EMPTY_ICON = "";
 
     private Tile[][] allTiles;
-    private int groundWidth;
-    private int groundHeight;
+    private int groundWidth = 10;
+    private int groundHeight = 10;
     private int bombsCount;
-    private int bombsPercent;
+    private int bombsPercent = 20;
+    private VerticalLayout playGroundLayout;
+    private ToggleButton flagToggle;
+    private Label bombsLabel;
 
     public MineSweeperView() {
         setupGrid();
+        addFlagSwitch();
         createPlayGround();
-        addMenuBar();
+        addBombsLabel();
+        addRestartButton();
     }
 
-    private void addMenuBar() {
-        HorizontalLayout menuBar = new HorizontalLayout();
 
-        menuBar.add(configureRestartButton());
-
-        //Header bombsLabel = new Header(bombsCount);
+    private void addBombsLabel() {
+        bombsLabel = new Label(Integer.toString(bombsCount));
+        bombsLabel.addClassName("bombs-label");
+        mainLayout.addComponentAsFirst(bombsLabel);
     }
 
-    private Button configureRestartButton() {
+    private void addFlagSwitch() {
+        flagToggle = new ToggleButton(FLAG_ICON);
+        mainLayout.add(flagToggle);
+        flagToggle.addClickShortcut(Key.KEY_F);
+    }
+
+    private void toggleFlag() {
+        flagToggle.setValue(!flagToggle.getValue());
+    }
+
+    private void addRestartButton() {
         Button restartButton = new Button();
         restartButton.setIcon(VaadinIcon.REFRESH.create());
         restartButton.addClickListener(click -> {
             createPlayGround();
+            bombsLabel.setText(Integer.toString(bombsCount));
         });
-        return restartButton;
+        mainLayout.add(restartButton);
     }
 
     private void setupGrid() {
@@ -63,40 +81,65 @@ public class MineSweeperView extends VerticalLayout {
     }
 
     private void createPlayGround() {
-        mainLayout.removeAll();
+        if (playGroundLayout == null) {
+            playGroundLayout = new VerticalLayout();
+            mainLayout.add(playGroundLayout);
+        } else {
+            playGroundLayout.removeAll();
+        }
 
-        groundWidth = 10;
-        groundHeight = 10;
-
-        bombsPercent = 20;
-        bombsCount = ((groundHeight*groundWidth)/100)*bombsPercent;
+        bombsCount = ((groundHeight * groundWidth * bombsPercent) / 100);
 
         allTiles = new Tile[groundHeight][groundWidth];
 
         Random random = new Random();
+
+        int currentBombs = 0;
         for (int i = 0; i < groundWidth; i++) {
             HorizontalLayout row = new HorizontalLayout();
             for (int j = 0; j < groundHeight; j++) {
                 Tile button = new Tile();
                 button.addClickListener(clickEvent -> {
-                    if (button.isBomb) {
-                        showAllGround();
-                        Notification.show("Game over!");
+                    if (flagToggle.getValue()) {
+                        if (button.getText().equals(EMPTY_ICON)) {
+                            button.setText(FLAG_ICON);
+                            bombsLabel.setText(Integer.toString(Integer.parseInt(bombsLabel.getText()) - 1));
+                        }
+                        return;
+                    }
+                    if (button.getText().equals(FLAG_ICON)) {
+                        button.setText(EMPTY_ICON);
+                        bombsLabel.setText(Integer.toString(Integer.parseInt(bombsLabel.getText()) + 1));
                     } else {
-                        showTile(button);
+                        if (button.isBomb) {
+                            showAllGround();
+                            Notification.show("Game over!");
+                        } else {
+                            showTile(button);
+                        }
                     }
                 });
                 button.x = j;
                 button.y = i;
 
-                button.isBomb = random.nextInt(100) < bombsPercent ? true : false;
+                if (currentBombs < bombsCount) {
+                    if (random.nextInt(100) < bombsPercent) {
+                        button.isBomb = true;
+                        currentBombs++;
+                    }
+                }
+
                 button.addClassName("tile");
                 row.add(button);
 
                 allTiles[i][j] = button;
             }
-            mainLayout.add(row);
-            mainLayout.setHorizontalComponentAlignment(Alignment.CENTER, row);
+            playGroundLayout.add(row);
+            playGroundLayout.setHorizontalComponentAlignment(Alignment.CENTER, row);
+        }
+
+        if (currentBombs < bombsCount) {
+            bombsLabel.setText(Integer.toString(currentBombs));
         }
 
     }
@@ -120,8 +163,16 @@ public class MineSweeperView extends VerticalLayout {
                     showTile(allTiles[i][j]);
                 }
             }
-        }else {
+        } else {
             button.setText(Integer.toString(bombsAround));
+        }
+
+        checkWin();
+    }
+
+    private void checkWin() {
+        if (bombsLabel.getText().equals("0")) {
+            Notification.show("You won!");
         }
     }
 
@@ -129,9 +180,15 @@ public class MineSweeperView extends VerticalLayout {
         for (int i = 0; i < groundHeight; i++) {
             for (int j = 0; j < groundWidth; j++) {
                 if (allTiles[i][j].isBomb) {
+                    if (allTiles[i][j].getText().equals(FLAG_ICON)) {
+                        allTiles[i][j].addClassName("green-tile");
+                    } else {
+                        allTiles[i][j].addClassName("red-tile");
+                    }
                     allTiles[i][j].setText(BOMB_ICON);
                 } else {
-                    allTiles[i][j].setText(Integer.toString(countBombsAround(allTiles[i][j])));
+                    //allTiles[i][j].setText(Integer.toString(countBombsAround(allTiles[i][j])));
+                    showTile(allTiles[i][j]);
                 }
             }
         }

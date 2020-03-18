@@ -5,6 +5,19 @@
 .tile {
 }
 
+.red-tile{
+    background-color : rgba(255,0,0,0.4);
+}
+
+.green-tile{
+    background-color : rgba(0,255,0,0.4);
+}
+
 .uncovered-tile {
     background-color : rgba(0,0,0,0);
 }
+
+.bombs-label{
+    font-size:xx-large;
+}
+
