@@ -20,26 +20,38 @@ import java.util.Random;
 public class MineSweeperView extends VerticalLayout {
 
     private VerticalLayout mainLayout;
+
     private final String FLAG_ICON = "\uD83C\uDFF3";
     private final String BOMB_ICON = "\uD83D\uDCA3";
     private final String EMPTY_ICON = "";
+
     private Tile[][] allTiles;
     private int groundWidth;
     private int groundHeight;
+    private int bombsCount;
+    private int bombsPercent;
 
     public MineSweeperView() {
         setupGrid();
-        addRestartButton();
         createPlayGround();
+        addMenuBar();
     }
 
-    private void addRestartButton() {
+    private void addMenuBar() {
+        HorizontalLayout menuBar = new HorizontalLayout();
+
+        menuBar.add(configureRestartButton());
+
+        //Header bombsLabel = new Header(bombsCount);
+    }
+
+    private Button configureRestartButton() {
         Button restartButton = new Button();
         restartButton.setIcon(VaadinIcon.REFRESH.create());
         restartButton.addClickListener(click -> {
             createPlayGround();
         });
-        add(restartButton);
+        return restartButton;
     }
 
     private void setupGrid() {
@@ -56,6 +68,9 @@ public class MineSweeperView extends VerticalLayout {
         groundWidth = 10;
         groundHeight = 10;
 
+        bombsPercent = 20;
+        bombsCount = ((groundHeight*groundWidth)/100)*bombsPercent;
+
         allTiles = new Tile[groundHeight][groundWidth];
 
         Random random = new Random();
@@ -68,14 +83,13 @@ public class MineSweeperView extends VerticalLayout {
                         showAllGround();
                         Notification.show("Game over!");
                     } else {
-                        button.setText(Integer.toString(countBombsAround(button)));
-                        button.setEnabled(false);
+                        showTile(button);
                     }
                 });
                 button.x = j;
                 button.y = i;
 
-                button.isBomb = random.nextInt(100) < 20 ? true : false;
+                button.isBomb = random.nextInt(100) < bombsPercent ? true : false;
                 button.addClassName("tile");
                 row.add(button);
 
@@ -85,6 +99,30 @@ public class MineSweeperView extends VerticalLayout {
             mainLayout.setHorizontalComponentAlignment(Alignment.CENTER, row);
         }
 
+    }
+
+    private void showTile(Tile button) {
+        if (!button.isEnabled()) {
+            return;
+        }
+
+        int bombsAround = countBombsAround(button);
+
+        button.setEnabled(false);
+        button.addClassName("uncovered-tile");
+
+        if (bombsAround == 0) {
+            for (int i = button.y - 1; i <= button.y + 1; i++) {
+                for (int j = button.x - 1; j <= button.x + 1; j++) {
+                    if (i < 0 || j < 0 || i > groundHeight - 1 || j > groundWidth - 1) {
+                        continue;
+                    }
+                    showTile(allTiles[i][j]);
+                }
+            }
+        }else {
+            button.setText(Integer.toString(bombsAround));
+        }
     }
 
     private void showAllGround() {
