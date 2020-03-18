@@ -3,6 +3,7 @@ package com.live.vladislav.ui.views;
 import com.live.vladislav.ui.views.minesweeper.Tile;
 import com.vaadin.componentfactory.ToggleButton;
 import com.vaadin.flow.component.Key;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Label;
@@ -14,6 +15,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.annotation.UIScope;
 
+import javax.annotation.PostConstruct;
 import java.util.Random;
 
 @PageTitle("MineSweeper")
@@ -32,7 +34,7 @@ public class MineSweeperView extends VerticalLayout {
     private int groundWidth = 10;
     private int groundHeight = 10;
     private int bombsCount;
-    private int bombsPercent = 20;
+    private int bombsPercent = 10;
     private VerticalLayout playGroundLayout;
     private ToggleButton flagToggle;
     private Label bombsLabel;
@@ -40,25 +42,36 @@ public class MineSweeperView extends VerticalLayout {
     public MineSweeperView() {
         setupGrid();
         addFlagSwitch();
-        createPlayGround();
         addBombsLabel();
+        createPlayGround();
         addRestartButton();
     }
 
+    @PostConstruct
+    private void init(){
+        UI.getCurrent().addShortcutListener(fireEvent->toggleFlag(), Key.KEY_F);
+    }
 
     private void addBombsLabel() {
-        bombsLabel = new Label(Integer.toString(bombsCount));
+        bombsLabel = new Label();
         bombsLabel.addClassName("bombs-label");
         mainLayout.addComponentAsFirst(bombsLabel);
     }
 
     private void addFlagSwitch() {
-        flagToggle = new ToggleButton(FLAG_ICON);
+        flagToggle = new ToggleButton(" ' f ' "+FLAG_ICON);
+        flagToggle.setValue(false);
+
         mainLayout.add(flagToggle);
-        flagToggle.addClickShortcut(Key.KEY_F);
     }
 
     private void toggleFlag() {
+        if(flagToggle.getValue()){
+            Notification.show("Toggled flags : OFF");
+        }else{
+            Notification.show("Toggled flags : ON");
+        }
+
         flagToggle.setValue(!flagToggle.getValue());
     }
 
@@ -137,11 +150,7 @@ public class MineSweeperView extends VerticalLayout {
             playGroundLayout.add(row);
             playGroundLayout.setHorizontalComponentAlignment(Alignment.CENTER, row);
         }
-
-        if (currentBombs < bombsCount) {
-            bombsLabel.setText(Integer.toString(currentBombs));
-        }
-
+        bombsLabel.setText(Integer.toString(currentBombs));
     }
 
     private void showTile(Tile button) {
@@ -171,8 +180,28 @@ public class MineSweeperView extends VerticalLayout {
     }
 
     private void checkWin() {
-        if (bombsLabel.getText().equals("0")) {
+//        for (int i = 0; i < groundHeight; i++) {
+//            for (int j = 0; j < allTiles.length; j++) {
+//                Tile[] allTile = allTiles[j];
+//
+//            }
+//            Tile[] tiles = groundHeight[i];
+//
+//        }
+        boolean won = true;
+
+        for (int i = 0; i < groundHeight; i++) {
+            for (int j = 0; j < groundWidth; j++) {
+                if (allTiles[i][j].isBomb)
+                    if (!allTiles[i][j].getText().equals(FLAG_ICON)) {
+                        won=false;
+                        break;
+                    }
+            }
+        }
+        if (won) {
             Notification.show("You won!");
+            showAllGround();
         }
     }
 
