@@ -250,11 +250,18 @@ public class MineSweeperView extends VerticalLayout {
 
         for (int i = 0; i < getIntValue(height); i++) {
             for (int j = 0; j < getIntValue(width); j++) {
-                if (allTiles[i][j].isBomb)
+                if (allTiles[i][j].isBomb){
                     if (!allTiles[i][j].getText().equals(FLAG_ICON)) {
                         won = false;
                         break;
                     }
+                }else {
+                    if(allTiles[i][j].isEnabled()){
+                        won = false;
+                        break;
+                    }
+                }
+
             }
         }
         if (won) {
