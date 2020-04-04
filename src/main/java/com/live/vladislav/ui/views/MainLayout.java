@@ -6,6 +6,7 @@ import com.vaadin.componentfactory.ToggleButton;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.html.Anchor;
 import com.vaadin.flow.component.html.H1;
@@ -80,7 +81,13 @@ public class MainLayout extends AppLayout {
                         listLink,
                         new RouterLink("Dashboard", DashboardView.class),
                         new RouterLink("ToDo", ToDoView.class),
-                        new RouterLink("MineSweeper",MineSweeperView.class)
+                        new RouterLink("MineSweeper", MineSweeperView.class),
+//                        new RouterLink("Calculator","api/calculator")
+                new Button("Calculator",click->{
+                    UI.getCurrent().navigate("api/calculator");
+                    UI.getCurrent().getPage().reload();
+                })
+
                 )
         );
 
