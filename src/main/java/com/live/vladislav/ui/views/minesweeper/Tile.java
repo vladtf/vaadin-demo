@@ -1,8 +1,8 @@
 package com.live.vladislav.ui.views.minesweeper;
 
-import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.html.NativeButton;
 
-public class Tile extends Button {
+public class Tile extends NativeButton {
     public boolean isBomb;
     public int x;
     public int y;

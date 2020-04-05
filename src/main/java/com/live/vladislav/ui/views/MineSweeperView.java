@@ -34,17 +34,18 @@ public class MineSweeperView extends VerticalLayout {
 
     private ToggleButton flagToggle;
     private Label bombsLabel;
-    private TextField height;
-    private TextField width;
+    private TextField height = new TextField();
+    private TextField width = new TextField();
     private boolean isFirstClick;
 
     public MineSweeperView() {
         setupMainLayout();
         addMenuBar();
-        addSizeDialog();
 
         createPlayGround();
         configureShortcuts();
+
+        addSizeDialog();
 
         restartGame();
     }
@@ -73,18 +74,11 @@ public class MineSweeperView extends VerticalLayout {
     }
 
     private void addSizeDialog() {
-
-        height = new TextField("Height");
-        width = new TextField("Width");
-
-        height.setValue("10");
-        width.setValue("10");
-
-        mainLayout.add(height,width);
+        mainLayout.add(getSizeMenu());
     }
 
-    private VerticalLayout getSizeMenu() {
-        VerticalLayout sizeLayout = new VerticalLayout();
+    private HorizontalLayout getSizeMenu() {
+        HorizontalLayout sizeLayout = new HorizontalLayout();
         height = new TextField("Height");
         width = new TextField("Width");
 
@@ -153,6 +147,7 @@ public class MineSweeperView extends VerticalLayout {
 
         for (int i = 0; i < getIntValue(height); i++) {
             HorizontalLayout row = new HorizontalLayout();
+            row.addClassName("row");
             for (int j = 0; j < getIntValue(width); j++) {
                 Tile tile = new Tile(j, i);
 

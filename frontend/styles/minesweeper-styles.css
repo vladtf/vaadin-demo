@@ -1,8 +1,18 @@
 .play-layout {
+}
 
+.row{
+    margin: 2px;
 }
 
 .tile {
+    width: 35px;
+    height: 35px;
+    background-color : rgba(54, 72, 95, 0.3);
+    border: none;
+    border-radius: 0%;
+    margin: 2px;
+    color:white;
 }
 
 .red-tile{
