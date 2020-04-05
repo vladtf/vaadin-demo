@@ -34,8 +34,12 @@ public class MineSweeperView extends VerticalLayout {
 
     private ToggleButton flagToggle;
     private Label bombsLabel;
-    private TextField height = new TextField();
-    private TextField width = new TextField();
+    private TextField height = new TextField() {{
+        setValue("10");
+    }};
+    private TextField width = new TextField() {{
+        setValue("10");
+    }};
     private boolean isFirstClick;
 
     public MineSweeperView() {
@@ -54,6 +58,7 @@ public class MineSweeperView extends VerticalLayout {
     private void configureShortcuts() {
         UI.getCurrent().addShortcutListener(fireEvent -> toggleFlag(), Key.KEY_F);
         UI.getCurrent().addShortcutListener(fireEvent -> restartGame(), Key.KEY_R);
+        Notification.show("Press F to toggle flags");
     }
 
     private void setupMainLayout() {
@@ -120,9 +125,7 @@ public class MineSweeperView extends VerticalLayout {
     private Button getRestartButton() {
         Button restartButton = new Button();
         restartButton.setIcon(VaadinIcon.REFRESH.create());
-        restartButton.addClickListener(click -> {
-            restartGame();
-        });
+        restartButton.addClickListener(click -> restartGame());
 
         return restartButton;
     }
@@ -151,9 +154,7 @@ public class MineSweeperView extends VerticalLayout {
             for (int j = 0; j < getIntValue(width); j++) {
                 Tile tile = new Tile(j, i);
 
-                tile.addClickListener(clickEvent -> {
-                    tileClick(tile);
-                });
+                tile.addClickListener(clickEvent -> tileClick(tile));
 
                 tile.addClassName("tile");
                 allTiles[i][j] = tile;
@@ -299,7 +300,7 @@ public class MineSweeperView extends VerticalLayout {
     }
 
     private int getIntValue(TextField textField) {
-        int value = 0;
+        int value;
         try {
             value = Integer.parseInt(textField.getValue());
 

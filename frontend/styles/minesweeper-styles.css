@@ -1,38 +1,38 @@
 .play-layout {
 }
 
-.row{
+.row {
     margin: 2px;
 }
 
 .tile {
     width: 35px;
     height: 35px;
-    background-color : rgba(54, 72, 95, 0.3);
+    background-color: rgba(54, 72, 95, 0.3);
     border: none;
-    border-radius: 0%;
+    border-radius: 0;
     margin: 2px;
-    color:white;
+    color: white;
 }
 
-.red-tile{
-    background-color : rgba(255,0,0,0.4);
+.red-tile {
+    background-color: rgba(255, 0, 0, 0.4);
 }
 
-.green-tile{
-    background-color : rgba(0,255,0,0.4);
+.green-tile {
+    background-color: rgba(0, 255, 0, 0.4);
 }
 
 .uncovered-tile {
-    background-color : rgba(0,0,0,0);
+    background-color: rgba(0, 0, 0, 0);
 }
 
-.bombs-label{
-    font-size:xx-large;
+.bombs-label {
+    font-size: xx-large;
 }
 
-.restart-button{
-    margin : 30,0,0,0;
+.restart-button {
+    margin: 10px;
 }
 
 
