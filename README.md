@@ -2,6 +2,8 @@
 
 This projects tests and implements Vaadin Framework features.
 
+Created applications: TODOs, Minesweeper, Calculator.
+
 Project was created using [start.vaadin.com](https://start.vaadin.com/).
 
 ## Running the Application
